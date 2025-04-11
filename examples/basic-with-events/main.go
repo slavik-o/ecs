@@ -15,8 +15,12 @@ func main() {
 	// Register systems
 	world.AddSystem(shared.NewRenderSystem())
 	world.AddSystem(shared.NewMovementSystem())
+	world.AddSystem(shared.NewCollisionSystem())
+	world.AddSystem(shared.NewHealthSystem(world))
+	world.AddSystem(shared.NewDamageSystem(world))
 
 	// Register component types
+	shared.COMPONENT_HEALTH = world.RegisterComponentType()
 	shared.COMPONENT_POSITION = world.RegisterComponentType()
 	shared.COMPONENT_RENDERABLE = world.RegisterComponentType()
 	shared.COMPONENT_VELOCITY = world.RegisterComponentType()
@@ -28,6 +32,7 @@ func main() {
 	world.AddComponent(player, shared.COMPONENT_RENDERABLE, &shared.Renderable{Sprite: "player"})
 	world.AddComponent(player, shared.COMPONENT_POSITION, &shared.Position{X: 10, Y: 10})
 	world.AddComponent(player, shared.COMPONENT_VELOCITY, &shared.Velocity{X: 1, Y: 1})
+	world.AddComponent(player, shared.COMPONENT_HEALTH, &shared.Health{Current: 100, Max: 100})
 
 	// Create enemy entity
 	enemy := world.NewEntity()
@@ -36,6 +41,7 @@ func main() {
 	world.AddComponent(enemy, shared.COMPONENT_RENDERABLE, &shared.Renderable{Sprite: "enemy"})
 	world.AddComponent(enemy, shared.COMPONENT_POSITION, &shared.Position{X: 20, Y: 20})
 	world.AddComponent(enemy, shared.COMPONENT_VELOCITY, &shared.Velocity{X: -1, Y: -1})
+	world.AddComponent(enemy, shared.COMPONENT_HEALTH, &shared.Health{Current: 50, Max: 50})
 
 	// Game loop simulation
 	for i := range 10 {
