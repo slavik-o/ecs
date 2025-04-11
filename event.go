@@ -57,11 +57,8 @@ func (em *EventManager) Update() {
 	em.pending, em.queue = em.queue, em.pending
 	em.queue = em.queue[:0] // Clear queue but retain capacity
 
-	// Process all pending events
 	for _, event := range em.pending {
-		// Get handlers for event type
 		if handlers, exists := em.handlers[event.Type()]; exists {
-			// Process each handler
 			for _, handler := range handlers {
 				handler(event)
 			}

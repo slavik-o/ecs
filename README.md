@@ -14,7 +14,7 @@ See [examples/](https://github.com/slavik-o/ecs/blob/main/examples/).
 
 ## License
 
-Copyright (c) 2025-present [Oskar Slavik](https://github.com/slavik-o)
+Copyright (c) 2025-present [Oskar](https://github.com/slavik-o)
 
 Licensed under [MIT License](./LICENSE)
 
