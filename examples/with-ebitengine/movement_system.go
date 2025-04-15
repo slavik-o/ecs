@@ -7,17 +7,11 @@ import (
 )
 
 type MovementSystem struct {
-	requiredMask ecs.ComponentMask
-	world        *ecs.World
+	world *ecs.World
 }
 
 func NewMovementSystem(world *ecs.World) *MovementSystem {
 	system := &MovementSystem{
-		requiredMask: ecs.CreateComponentMask(
-			shared.COMPONENT_CONTROLLER,
-			shared.COMPONENT_POSITION,
-			shared.COMPONENT_RENDERABLE,
-		),
 		world: world,
 	}
 
@@ -27,7 +21,7 @@ func NewMovementSystem(world *ecs.World) *MovementSystem {
 }
 
 func (s *MovementSystem) ComponentMask() ecs.ComponentMask {
-	return s.requiredMask
+	return 0
 }
 
 func (s *MovementSystem) Update(dt float32, world *ecs.World) {
@@ -37,21 +31,17 @@ func (s *MovementSystem) Update(dt float32, world *ecs.World) {
 func (s *MovementSystem) OnMove(event ecs.Event) {
 	moveEvent := event.(*shared.MoveEvent)
 
-	entities := s.world.GetEntitiesWithMask(s.requiredMask)
+	// Change position
+	position := s.world.GetComponent(moveEvent.Entity, shared.COMPONENT_POSITION).(*shared.Position)
 
-	for _, entity := range entities {
-		// Change position
-		position := s.world.GetComponent(entity, shared.COMPONENT_POSITION).(*shared.Position)
-
-		switch moveEvent.Direction {
-		case shared.DIRECTION_LEFT:
-			position.X -= 1
-		case shared.DIRECTION_RIGHT:
-			position.X += 1
-		case shared.DIRECTION_UP:
-			position.Y -= 1
-		case shared.DIRECTION_DOWN:
-			position.Y += 1
-		}
+	switch moveEvent.Direction {
+	case shared.DIRECTION_LEFT:
+		position.X -= 1
+	case shared.DIRECTION_RIGHT:
+		position.X += 1
+	case shared.DIRECTION_UP:
+		position.Y -= 1
+	case shared.DIRECTION_DOWN:
+		position.Y += 1
 	}
 }

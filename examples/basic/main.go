@@ -13,10 +13,6 @@ func main() {
 	// Create a new world
 	world := ecs.NewWorld()
 
-	// Register systems
-	world.AddSystem(shared.NewRenderSystem())
-	world.AddSystem(shared.NewMovementSystem())
-
 	// Register component types
 	shared.COMPONENT_POSITION = world.RegisterComponentType()
 	shared.COMPONENT_RENDERABLE = world.RegisterComponentType()
@@ -37,6 +33,10 @@ func main() {
 	world.AddComponent(enemy, shared.COMPONENT_RENDERABLE, &shared.Renderable{Sprite: "enemy"})
 	world.AddComponent(enemy, shared.COMPONENT_POSITION, &shared.Position{X: 20, Y: 20})
 	world.AddComponent(enemy, shared.COMPONENT_VELOCITY, &shared.Velocity{X: -1, Y: -1})
+
+	// Register systems
+	world.AddSystem(shared.NewRenderSystem())
+	world.AddSystem(shared.NewMovementSystem())
 
 	// Game loop simulation
 	for i := range 10 {

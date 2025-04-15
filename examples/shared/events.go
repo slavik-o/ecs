@@ -50,6 +50,7 @@ const (
 )
 
 type MoveEvent struct {
+	Entity    ecs.Entity
 	Direction Direction
 }
 

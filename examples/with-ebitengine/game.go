@@ -23,10 +23,6 @@ type Game struct {
 func NewGame() *Game {
 	world := ecs.NewWorld()
 
-	// Register systems
-	world.AddSystem(NewControllerSystem())
-	world.AddSystem(NewMovementSystem(world))
-
 	// Register component types
 	shared.COMPONENT_CONTROLLER = world.RegisterComponentType()
 	shared.COMPONENT_POSITION = world.RegisterComponentType()
@@ -37,6 +33,10 @@ func NewGame() *Game {
 	world.AddComponent(player, shared.COMPONENT_CONTROLLER, nil)
 	world.AddComponent(player, shared.COMPONENT_RENDERABLE, &shared.Renderable{Sprite: "player"})
 	world.AddComponent(player, shared.COMPONENT_POSITION, &shared.Position{X: 10, Y: 10})
+
+	// Register systems
+	world.AddSystem(NewControllerSystem(player))
+	world.AddSystem(NewMovementSystem(world))
 
 	// Initialize game
 	return &Game{world: world, renderMask: ecs.CreateComponentMask(

@@ -9,11 +9,13 @@ import (
 )
 
 type ControllerSystem struct {
-	requiredMask ecs.ComponentMask
+	controlledEntity ecs.Entity
+	requiredMask     ecs.ComponentMask
 }
 
-func NewControllerSystem() *ControllerSystem {
+func NewControllerSystem(controlledEntity ecs.Entity) *ControllerSystem {
 	return &ControllerSystem{
+		controlledEntity: controlledEntity,
 		requiredMask: ecs.CreateComponentMask(
 			shared.COMPONENT_CONTROLLER,
 		),
@@ -28,18 +30,22 @@ func (s *ControllerSystem) Update(dt float32, world *ecs.World) {
 	switch {
 	case inpututil.IsKeyJustPressed(ebiten.KeyArrowLeft):
 		world.EventManager.Publish(&shared.MoveEvent{
+			Entity:    s.controlledEntity,
 			Direction: shared.DIRECTION_LEFT,
 		})
 	case inpututil.IsKeyJustPressed(ebiten.KeyArrowRight):
 		world.EventManager.Publish(&shared.MoveEvent{
+			Entity:    s.controlledEntity,
 			Direction: shared.DIRECTION_RIGHT,
 		})
 	case inpututil.IsKeyJustPressed(ebiten.KeyArrowUp):
 		world.EventManager.Publish(&shared.MoveEvent{
+			Entity:    s.controlledEntity,
 			Direction: shared.DIRECTION_UP,
 		})
 	case inpututil.IsKeyJustPressed(ebiten.KeyArrowDown):
 		world.EventManager.Publish(&shared.MoveEvent{
+			Entity:    s.controlledEntity,
 			Direction: shared.DIRECTION_DOWN,
 		})
 	}
