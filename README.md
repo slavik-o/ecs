@@ -2,7 +2,7 @@
 
 [![GoDoc Widget]][GoDoc]
 
-This is a basic implementation of the Entity Component System pattern in Go.
+This is a basic implementation of the Entity Component System pattern in Go. No external dependencies.
 
 ## Install
 

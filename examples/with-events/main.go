@@ -4,8 +4,9 @@ import (
 	"fmt"
 	"time"
 
+	"examples/shared"
+
 	"github.com/slavik-o/ecs"
-	"github.com/slavik-o/ecs/examples/shared"
 )
 
 func main() {

@@ -3,10 +3,11 @@ package main
 import (
 	"image/color"
 
+	"examples/shared"
+
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/vector"
 	"github.com/slavik-o/ecs"
-	"github.com/slavik-o/ecs/examples/shared"
 )
 
 const (

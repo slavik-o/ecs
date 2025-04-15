@@ -1,8 +1,9 @@
 package main
 
 import (
+	"examples/shared"
+
 	"github.com/slavik-o/ecs"
-	"github.com/slavik-o/ecs/examples/shared"
 )
 
 type MovementSystem struct {

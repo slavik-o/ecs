@@ -1,10 +1,11 @@
 package main
 
 import (
+	"examples/shared"
+
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
 	"github.com/slavik-o/ecs"
-	"github.com/slavik-o/ecs/examples/shared"
 )
 
 type ControllerSystem struct {
