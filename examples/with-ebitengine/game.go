@@ -46,8 +46,7 @@ func NewGame() *Game {
 }
 
 func (g *Game) Update() error {
-	g.world.Update(1.0 / 60.0) // Fixed delta time
-	return nil
+	return g.world.Update(1.0 / 60.0) // Fixed delta time
 }
 
 func (g *Game) Draw(screen *ebiten.Image) {

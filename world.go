@@ -122,12 +122,18 @@ func (w *World) AddSystem(system System) {
 }
 
 // Update updates all systems
-func (w *World) Update(dt float32) {
-	w.EventManager.Update()
+func (w *World) Update(dt float32) error {
+	if err := w.EventManager.Update(); err != nil {
+		return err
+	}
 
 	for _, system := range w.systems {
-		system.Update(dt, w)
+		if err := system.Update(dt, w); err != nil {
+			return err
+		}
 	}
+
+	return nil
 }
 
 // GetEntitiesWithMask returns entities that match the component mask

@@ -11,7 +11,7 @@ type ComponentMask uint64
 
 // System processes entities with specific components
 type System interface {
-	Update(dt float32, world *World)
+	Update(dt float32, world *World) error
 	ComponentMask() ComponentMask
 }
 

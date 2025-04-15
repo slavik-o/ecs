@@ -49,7 +49,9 @@ func main() {
 		fmt.Printf("\n--- Frame %d ---\n", i+1)
 
 		// Update with delta time of 1.0
-		world.Update(1.0)
+		if err := world.Update(1.0); err != nil {
+			panic(err)
+		}
 
 		time.Sleep(500 * time.Millisecond)
 	}
