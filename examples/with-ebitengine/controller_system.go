@@ -26,7 +26,7 @@ func (s *ControllerSystem) ComponentMask() ecs.ComponentMask {
 	return s.requiredMask
 }
 
-func (s *ControllerSystem) Update(dt float32, world *ecs.World) {
+func (s *ControllerSystem) Update(dt float32, world *ecs.World) error {
 	switch {
 	case inpututil.IsKeyJustPressed(ebiten.KeyArrowLeft):
 		world.EventManager.Publish(&shared.MoveEvent{
@@ -49,4 +49,6 @@ func (s *ControllerSystem) Update(dt float32, world *ecs.World) {
 			Direction: shared.DIRECTION_DOWN,
 		})
 	}
+
+	return nil
 }

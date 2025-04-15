@@ -23,7 +23,7 @@ func (s *RenderSystem) ComponentMask() ecs.ComponentMask {
 	return s.requiredMask
 }
 
-func (s *RenderSystem) Update(dt float32, world *ecs.World) {
+func (s *RenderSystem) Update(dt float32, world *ecs.World) error {
 	entities := world.GetEntitiesWithMask(s.requiredMask)
 
 	for _, entity := range entities {
@@ -33,4 +33,6 @@ func (s *RenderSystem) Update(dt float32, world *ecs.World) {
 		// Simulates rendering
 		fmt.Printf("Rendering %s at %.0f,%.0f\n", renderable.Sprite, position.X, position.Y)
 	}
+
+	return nil
 }

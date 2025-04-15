@@ -20,11 +20,12 @@ func (s *DamageSystem) ComponentMask() ecs.ComponentMask {
 	return 0 // This system doesn't process entities directly
 }
 
-func (s *DamageSystem) Update(dt float32, world *ecs.World) {
+func (s *DamageSystem) Update(dt float32, world *ecs.World) error {
 	// No direct entity processing - this system works via event handling
+	return nil
 }
 
-func (s *DamageSystem) handleCollision(event ecs.Event) {
+func (s *DamageSystem) handleCollision(event ecs.Event) error {
 	collisionEvent := event.(*CollisionEvent)
 
 	// Check if entity1 has health
@@ -76,4 +77,6 @@ func (s *DamageSystem) handleCollision(event ecs.Event) {
 			})
 		}
 	}
+
+	return nil
 }

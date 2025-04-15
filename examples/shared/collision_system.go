@@ -19,7 +19,7 @@ func (s *CollisionSystem) ComponentMask() ecs.ComponentMask {
 	return s.requiredMask
 }
 
-func (s *CollisionSystem) Update(dt float32, world *ecs.World) {
+func (s *CollisionSystem) Update(dt float32, world *ecs.World) error {
 	entities := world.GetEntitiesWithMask(s.requiredMask)
 
 	// Very simplistic collision detection for demonstration
@@ -45,4 +45,6 @@ func (s *CollisionSystem) Update(dt float32, world *ecs.World) {
 			}
 		}
 	}
+
+	return nil
 }

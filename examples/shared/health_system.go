@@ -30,19 +30,22 @@ func (s *HealthSystem) ComponentMask() ecs.ComponentMask {
 	return s.requiredMask
 }
 
-func (s *HealthSystem) Update(dt float32, world *ecs.World) {
+func (s *HealthSystem) Update(dt float32, world *ecs.World) error {
 	// Could implement health regeneration or other ongoing processes here
+	return nil
 }
 
-func (s *HealthSystem) handleHealthChanged(event ecs.Event) {
+func (s *HealthSystem) handleHealthChanged(event ecs.Event) error {
 	healthEvent := event.(*HealthChangedEvent)
 	fmt.Printf("Entity %d health changed from %d to %d\n",
 		healthEvent.Entity, healthEvent.PreviousHealth, healthEvent.NewHealth)
+
+	return nil
 }
 
-func (s *HealthSystem) handleEntityDied(event ecs.Event) {
+func (s *HealthSystem) handleEntityDied(event ecs.Event) error {
 	deathEvent := event.(*EntityDiedEvent)
 	fmt.Printf("Entity %d has died!\n", deathEvent.Entity)
 
-	// Handle death effects, scoring, or other game logic
+	return nil
 }

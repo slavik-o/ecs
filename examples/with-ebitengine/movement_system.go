@@ -24,11 +24,12 @@ func (s *MovementSystem) ComponentMask() ecs.ComponentMask {
 	return 0
 }
 
-func (s *MovementSystem) Update(dt float32, world *ecs.World) {
+func (s *MovementSystem) Update(dt float32, world *ecs.World) error {
 	// do nothing
+	return nil
 }
 
-func (s *MovementSystem) OnMove(event ecs.Event) {
+func (s *MovementSystem) OnMove(event ecs.Event) error {
 	moveEvent := event.(*shared.MoveEvent)
 
 	// Change position
@@ -44,4 +45,6 @@ func (s *MovementSystem) OnMove(event ecs.Event) {
 	case shared.DIRECTION_DOWN:
 		position.Y += 1
 	}
+
+	return nil
 }

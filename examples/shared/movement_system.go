@@ -17,7 +17,7 @@ func (s *MovementSystem) ComponentMask() ecs.ComponentMask {
 	return s.requiredMask
 }
 
-func (s *MovementSystem) Update(dt float32, world *ecs.World) {
+func (s *MovementSystem) Update(dt float32, world *ecs.World) error {
 	entities := world.GetEntitiesWithMask(s.requiredMask)
 
 	for _, entity := range entities {
@@ -28,4 +28,6 @@ func (s *MovementSystem) Update(dt float32, world *ecs.World) {
 		pos.X += vel.X * dt
 		pos.Y += vel.Y * dt
 	}
+
+	return nil
 }
