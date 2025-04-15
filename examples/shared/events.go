@@ -7,6 +7,7 @@ const (
 	EVENT_COLLISION ecs.EventType = iota
 	EVENT_ENTITY_DIED
 	EVENT_HEALTH_CHANGED
+	EVENT_MOVE
 )
 
 // CollisionEvent is triggered when two entities collide
@@ -36,4 +37,22 @@ type HealthChangedEvent struct {
 
 func (e HealthChangedEvent) Type() ecs.EventType {
 	return EVENT_HEALTH_CHANGED
+}
+
+// MoveEvent is triggered when an entity moves
+type Direction int
+
+const (
+	DIRECTION_LEFT Direction = iota
+	DIRECTION_RIGHT
+	DIRECTION_UP
+	DIRECTION_DOWN
+)
+
+type MoveEvent struct {
+	Direction Direction
+}
+
+func (e MoveEvent) Type() ecs.EventType {
+	return EVENT_MOVE
 }

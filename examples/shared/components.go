@@ -8,6 +8,7 @@ var (
 	COMPONENT_POSITION   ecs.ComponentID
 	COMPONENT_RENDERABLE ecs.ComponentID
 	COMPONENT_VELOCITY   ecs.ComponentID
+	COMPONENT_CONTROLLER ecs.ComponentID
 )
 
 type Renderable struct {
