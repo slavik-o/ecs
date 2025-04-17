@@ -14,9 +14,9 @@ func main() {
 	world := ecs.NewWorld()
 
 	// Register component types
-	shared.COMPONENT_POSITION = world.RegisterComponentType()
-	shared.COMPONENT_RENDERABLE = world.RegisterComponentType()
-	shared.COMPONENT_VELOCITY = world.RegisterComponentType()
+	world.RegisterComponentType(shared.COMPONENT_POSITION)
+	world.RegisterComponentType(shared.COMPONENT_RENDERABLE)
+	world.RegisterComponentType(shared.COMPONENT_VELOCITY)
 
 	// Create player entity
 	player := world.NewEntity()

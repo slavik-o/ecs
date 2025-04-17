@@ -8,6 +8,9 @@ type World struct {
 	// Entities map to store all entities
 	entities map[Entity]bool
 
+	// Components slice to store all components
+	components []ComponentID
+
 	// Component stores map to store all component stores
 	componentStores map[ComponentID]ComponentStore
 
@@ -16,9 +19,6 @@ type World struct {
 
 	// Entity masks map to store all entity masks
 	entityMasks map[Entity]ComponentMask
-
-	// Next component ID to generate unique component IDs
-	nextComponentID ComponentID
 
 	// Event manager to manage all events between systems
 	EventManager *EventManager
@@ -29,25 +29,19 @@ func NewWorld() *World {
 	return &World{
 		entityCounter:   0,
 		entities:        make(map[Entity]bool),
+		components:      []ComponentID{},
 		componentStores: make(map[ComponentID]ComponentStore),
 		systems:         []System{},
 		entityMasks:     make(map[Entity]ComponentMask),
-		nextComponentID: 0,
 		EventManager:    NewEventManager(),
 	}
 }
 
 // RegisterComponentType registers a new component type and returns its ID
-func (w *World) RegisterComponentType() ComponentID {
-	id := w.nextComponentID
-
-	w.nextComponentID++
-
+func (w *World) RegisterComponentType(id ComponentID) {
 	w.componentStores[id] = &GenericComponentStore{
 		components: make(map[Entity]interface{}),
 	}
-
-	return id
 }
 
 // NewEntity creates a new entity
@@ -68,7 +62,8 @@ func (w *World) RemoveEntity(entity Entity) {
 	}
 
 	mask := w.entityMasks[entity]
-	for id := ComponentID(0); id < w.nextComponentID; id++ {
+
+	for _, id := range w.components {
 		if (mask & (1 << id)) != 0 {
 			w.componentStores[id].Remove(entity)
 		}

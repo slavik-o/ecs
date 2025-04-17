@@ -3,12 +3,12 @@ package shared
 import "github.com/slavik-o/ecs"
 
 // Component IDs for the components
-var (
-	COMPONENT_HEALTH     ecs.ComponentID
-	COMPONENT_POSITION   ecs.ComponentID
-	COMPONENT_RENDERABLE ecs.ComponentID
-	COMPONENT_VELOCITY   ecs.ComponentID
-	COMPONENT_CONTROLLER ecs.ComponentID
+const (
+	COMPONENT_HEALTH ecs.ComponentID = iota
+	COMPONENT_POSITION
+	COMPONENT_RENDERABLE
+	COMPONENT_VELOCITY
+	COMPONENT_CONTROLLER
 )
 
 type Renderable struct {
