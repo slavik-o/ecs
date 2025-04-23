@@ -22,6 +22,9 @@ type World struct {
 
 	// Event manager to manage all events between systems
 	EventManager *EventManager
+
+	// State manager to manage entity states
+	StateManager *StateManager
 }
 
 // NewWorld creates a new ECS world
@@ -34,6 +37,7 @@ func NewWorld() *World {
 		systems:         []System{},
 		entityMasks:     make(map[Entity]ComponentMask),
 		EventManager:    NewEventManager(),
+		StateManager:    NewStateManager(),
 	}
 }
 
@@ -69,6 +73,7 @@ func (w *World) RemoveEntity(entity Entity) {
 		}
 	}
 
+	w.StateManager.RemoveEntity(entity)
 	delete(w.entities, entity)
 	delete(w.entityMasks, entity)
 }
@@ -119,6 +124,10 @@ func (w *World) AddSystem(system System) {
 // Update updates all systems
 func (w *World) Update(dt float32) error {
 	if err := w.EventManager.Update(); err != nil {
+		return err
+	}
+
+	if err := w.StateManager.Update(w, dt); err != nil {
 		return err
 	}
 
