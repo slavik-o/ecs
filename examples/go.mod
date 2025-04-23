@@ -4,7 +4,7 @@ go 1.24.0
 
 require (
 	github.com/hajimehoshi/ebiten/v2 v2.8.7
-	github.com/slavik-o/ecs v0.0.3
+	github.com/slavik-o/ecs v0.0.4
 )
 
 require (

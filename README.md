@@ -12,6 +12,7 @@ This is a basic implementation of the Entity Component System pattern in Go. No 
 
 - [Basic](https://github.com/slavik-o/ecs/blob/main/examples/basic/main.go)
 - [With Events](https://github.com/slavik-o/ecs/blob/main/examples/with-events/main.go)
+- [With States](https://github.com/slavik-o/ecs/blob/main/examples/with-states/main.go)
 - [With Ebitengine](https://github.com/slavik-o/ecs/blob/main/examples/with-ebitengine/main.go)
 
 ## License
