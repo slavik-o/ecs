@@ -9,7 +9,7 @@ type State interface {
 	Exit(entity Entity, world *World) error
 
 	// Update is called every frame while in this state
-	Update(entity Entity, world *World, dt float32) error
+	Update(dt float32, entity Entity, world *World) error
 }
 
 // StateComponent represents the current state of an entity
@@ -73,10 +73,10 @@ func (sm *StateManager) GetPreviousState(entity Entity) State {
 }
 
 // Update updates all entity states
-func (sm *StateManager) Update(world *World, dt float32) error {
+func (sm *StateManager) Update(dt float32, world *World) error {
 	for entity, stateComp := range sm.states {
 		if stateComp.CurrentState != nil {
-			if err := stateComp.CurrentState.Update(entity, world, dt); err != nil {
+			if err := stateComp.CurrentState.Update(dt, entity, world); err != nil {
 				return err
 			}
 		}

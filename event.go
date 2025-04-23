@@ -9,7 +9,7 @@ type Event interface {
 type EventType uint32
 
 // EventHandler is a callback function that processes events
-type EventHandler func(event Event) error
+type EventHandler func(event Event, world *World) error
 
 // EventManager handles the registration and distribution of events
 type EventManager struct {
@@ -43,10 +43,10 @@ func (em *EventManager) Publish(event Event) {
 }
 
 // PublishImmediate immediately dispatches an event to all subscribed handlers
-func (em *EventManager) PublishImmediate(event Event) error {
+func (em *EventManager) PublishImmediate(event Event, world *World) error {
 	if handlers, exists := em.handlers[event.Type()]; exists {
 		for _, handler := range handlers {
-			if err := handler(event); err != nil {
+			if err := handler(event, world); err != nil {
 				return err
 			}
 		}
@@ -56,7 +56,7 @@ func (em *EventManager) PublishImmediate(event Event) error {
 }
 
 // Update processes all events in the queue
-func (em *EventManager) Update() error {
+func (em *EventManager) Update(world *World) error {
 	// Swap queue and pending to prevent infinite loops if handlers publish new events
 	em.pending, em.queue = em.queue, em.pending
 	em.queue = em.queue[:0] // Clear queue but retain capacity
@@ -64,7 +64,7 @@ func (em *EventManager) Update() error {
 	for _, event := range em.pending {
 		if handlers, exists := em.handlers[event.Type()]; exists {
 			for _, handler := range handlers {
-				if err := handler(event); err != nil {
+				if err := handler(event, world); err != nil {
 					return err
 				}
 			}

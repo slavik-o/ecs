@@ -123,11 +123,11 @@ func (w *World) AddSystem(system System) {
 
 // Update updates all systems
 func (w *World) Update(dt float32) error {
-	if err := w.EventManager.Update(); err != nil {
+	if err := w.EventManager.Update(w); err != nil {
 		return err
 	}
 
-	if err := w.StateManager.Update(w, dt); err != nil {
+	if err := w.StateManager.Update(dt, w); err != nil {
 		return err
 	}
 
