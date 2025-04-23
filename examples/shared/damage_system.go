@@ -3,15 +3,13 @@ package shared
 import "github.com/slavik-o/ecs"
 
 // DamageSystem handles applying damage when collisions occur
-type DamageSystem struct {
-	world *ecs.World
-}
+type DamageSystem struct{}
 
 func NewDamageSystem(world *ecs.World) *DamageSystem {
-	system := &DamageSystem{world: world}
+	system := &DamageSystem{}
 
 	// Subscribe to collision events
-	world.EventManager.Subscribe(EVENT_COLLISION, system.handleCollision)
+	world.EventManager.Subscribe(EVENT_COLLISION, system.onCollision)
 
 	return system
 }
@@ -25,12 +23,12 @@ func (s *DamageSystem) Update(dt float32, world *ecs.World) error {
 	return nil
 }
 
-func (s *DamageSystem) handleCollision(event ecs.Event) error {
+func (s *DamageSystem) onCollision(event ecs.Event, world *ecs.World) error {
 	collisionEvent := event.(*CollisionEvent)
 
 	// Check if entity1 has health
-	if s.world.HasComponent(collisionEvent.Entity1, COMPONENT_HEALTH) {
-		health := s.world.GetComponent(collisionEvent.Entity1, COMPONENT_HEALTH).(*Health)
+	if world.HasComponent(collisionEvent.Entity1, COMPONENT_HEALTH) {
+		health := world.GetComponent(collisionEvent.Entity1, COMPONENT_HEALTH).(*Health)
 
 		previousHealth := health.Current
 
@@ -41,7 +39,7 @@ func (s *DamageSystem) handleCollision(event ecs.Event) error {
 		}
 
 		// Publish health changed event
-		s.world.EventManager.Publish(&HealthChangedEvent{
+		world.EventManager.Publish(&HealthChangedEvent{
 			Entity:         collisionEvent.Entity1,
 			PreviousHealth: previousHealth,
 			NewHealth:      health.Current,
@@ -49,15 +47,15 @@ func (s *DamageSystem) handleCollision(event ecs.Event) error {
 
 		// If health reached zero, publish entity died event
 		if health.Current == 0 {
-			s.world.EventManager.Publish(&EntityDiedEvent{
+			world.EventManager.Publish(&EntityDiedEvent{
 				Entity: collisionEvent.Entity1,
 			})
 		}
 	}
 
 	// Similarly for entity2
-	if s.world.HasComponent(collisionEvent.Entity2, COMPONENT_HEALTH) {
-		health := s.world.GetComponent(collisionEvent.Entity2, COMPONENT_HEALTH).(*Health)
+	if world.HasComponent(collisionEvent.Entity2, COMPONENT_HEALTH) {
+		health := world.GetComponent(collisionEvent.Entity2, COMPONENT_HEALTH).(*Health)
 		previousHealth := health.Current
 
 		health.Current -= 10
@@ -65,14 +63,14 @@ func (s *DamageSystem) handleCollision(event ecs.Event) error {
 			health.Current = 0
 		}
 
-		s.world.EventManager.Publish(&HealthChangedEvent{
+		world.EventManager.Publish(&HealthChangedEvent{
 			Entity:         collisionEvent.Entity2,
 			PreviousHealth: previousHealth,
 			NewHealth:      health.Current,
 		})
 
 		if health.Current == 0 {
-			s.world.EventManager.Publish(&EntityDiedEvent{
+			world.EventManager.Publish(&EntityDiedEvent{
 				Entity: collisionEvent.Entity2,
 			})
 		}

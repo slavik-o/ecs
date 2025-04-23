@@ -25,7 +25,7 @@ func (s *IdleState) Exit(entity ecs.Entity, world *ecs.World) error {
 	return nil
 }
 
-func (s *IdleState) Update(entity ecs.Entity, world *ecs.World, dt float32) error {
+func (s *IdleState) Update(dt float32, entity ecs.Entity, world *ecs.World) error {
 	// In idle state, entity doesn't move
 	velocity := world.GetComponent(entity, shared.COMPONENT_VELOCITY).(*shared.Velocity)
 	velocity.X = 0
@@ -50,7 +50,7 @@ func (s *MovingState) Exit(entity ecs.Entity, world *ecs.World) error {
 	return nil
 }
 
-func (s *MovingState) Update(entity ecs.Entity, world *ecs.World, dt float32) error {
+func (s *MovingState) Update(dt float32, entity ecs.Entity, world *ecs.World) error {
 	// In moving state, entity moves in its current direction
 	velocity := world.GetComponent(entity, shared.COMPONENT_VELOCITY).(*shared.Velocity)
 	position := world.GetComponent(entity, shared.COMPONENT_POSITION).(*shared.Position)
