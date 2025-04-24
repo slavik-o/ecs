@@ -8,8 +8,17 @@ import (
 	"github.com/slavik-o/ecs"
 )
 
+const (
+	STATE_IDLE ecs.StateType = iota
+	STATE_MOVING
+)
+
 // IdleState represents when an entity is standing still
 type IdleState struct{}
+
+func (s *IdleState) Type() ecs.StateType {
+	return STATE_IDLE
+}
 
 func (s *IdleState) Enter(entity ecs.Entity, world *ecs.World) error {
 	renderable := world.GetComponent(entity, shared.COMPONENT_RENDERABLE).(*shared.Renderable)
@@ -35,6 +44,10 @@ func (s *IdleState) Update(dt float32, entity ecs.Entity, world *ecs.World) erro
 
 // MovingState represents when an entity is moving
 type MovingState struct{}
+
+func (s *MovingState) Type() ecs.StateType {
+	return STATE_MOVING
+}
 
 func (s *MovingState) Enter(entity ecs.Entity, world *ecs.World) error {
 	renderable := world.GetComponent(entity, shared.COMPONENT_RENDERABLE).(*shared.Renderable)
