@@ -1,7 +1,11 @@
 package ecs
 
+type StateType uint32
+
 // State represents a state that an entity can be in
 type State interface {
+	Type() StateType
+
 	// Enter is called when entering this state
 	Enter(entity Entity, world *World) error
 
